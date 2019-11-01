@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/tests",
+    "name": "helper-network/omnipay-tests",
     "type": "library",
     "description": "Testing components for Omnipay payment processing library",
     "keywords": ["omnipay"],
@@ -7,16 +7,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Adrian Macneil",
-            "email": "adrian@adrianmacneil.com"
-        },
-        {
-            "name": "Barry vd. Heuvel",
-            "email": "barryvdh@gmail.com"
-        },
-        {
-            "name": "Omnipay Contributors",
-            "homepage": "https://github.com/thephpleague/omnipay-tests/contributors"
+            "name": "Griffin Meyer",
+            "homepage": "https://www.theeventhelper.com"
         }
     ],
     "autoload": {
