@@ -40,11 +40,10 @@ abstract class TestCase extends PHPUnitTestCase
      * @param string $str
      * @return string
      */
-    public function camelCase($str)
-    {
+    public function camelCase($str): string {
         return preg_replace_callback(
             '/_([a-z])/',
-            function ($match) {
+            static function ($match) {
                 return strtoupper($match[1]);
             },
             $str
@@ -57,8 +56,7 @@ abstract class TestCase extends PHPUnitTestCase
      *
      * @return array
      */
-    public function getMockedRequests()
-    {
+    public function getMockedRequests(): array {
         return $this->mockClient->getRequests();
     }
 
@@ -69,8 +67,7 @@ abstract class TestCase extends PHPUnitTestCase
      *
      * @return ResponseInterface
      */
-    public function getMockHttpResponse($path)
-    {
+    public function getMockHttpResponse($path): ResponseInterface {
         if ($path instanceof ResponseInterface) {
             return $path;
         }

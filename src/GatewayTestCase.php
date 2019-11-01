@@ -19,20 +19,20 @@ abstract class GatewayTestCase extends TestCase
     {
         $name = $this->gateway->getName();
         $this->assertNotEmpty($name);
-        $this->assertInternalType('string', $name);
+        $this->assertIsString($name);
     }
 
     public function testGetShortNameNotEmpty()
     {
         $shortName = $this->gateway->getShortName();
         $this->assertNotEmpty($shortName);
-        $this->assertInternalType('string', $shortName);
+        $this->assertIsString($shortName);
     }
 
     public function testGetDefaultParametersReturnsArray()
     {
         $settings = $this->gateway->getDefaultParameters();
-        $this->assertInternalType('array', $settings);
+        $this->assertIsArray($settings);
     }
 
     public function testDefaultParametersHaveMatchingMethods()
@@ -41,7 +41,7 @@ abstract class GatewayTestCase extends TestCase
         foreach ($settings as $key => $default) {
             $getter = 'get'.ucfirst($this->camelCase($key));
             $setter = 'set'.ucfirst($this->camelCase($key));
-            $value = uniqid();
+            $value = uniqid('', true);
 
             $this->assertTrue(method_exists($this->gateway, $getter), "Gateway must implement $getter()");
             $this->assertTrue(method_exists($this->gateway, $setter), "Gateway must implement $setter()");
@@ -55,10 +55,10 @@ abstract class GatewayTestCase extends TestCase
     public function testTestMode()
     {
         $this->assertSame($this->gateway, $this->gateway->setTestMode(false));
-        $this->assertSame(false, $this->gateway->getTestMode());
+        $this->assertFalse($this->gateway->getTestMode());
 
         $this->assertSame($this->gateway, $this->gateway->setTestMode(true));
-        $this->assertSame(true, $this->gateway->getTestMode());
+        $this->assertTrue($this->gateway->getTestMode());
     }
 
     public function testCurrency()
@@ -71,7 +71,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsAuthorize()
     {
         $supportsAuthorize = $this->gateway->supportsAuthorize();
-        $this->assertInternalType('boolean', $supportsAuthorize);
+        $this->assertIsBool($supportsAuthorize);
 
         if ($supportsAuthorize) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->authorize());
@@ -83,7 +83,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsCompleteAuthorize()
     {
         $supportsCompleteAuthorize = $this->gateway->supportsCompleteAuthorize();
-        $this->assertInternalType('boolean', $supportsCompleteAuthorize);
+        $this->assertIsBool($supportsCompleteAuthorize);
 
         if ($supportsCompleteAuthorize) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->completeAuthorize());
@@ -95,7 +95,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsCapture()
     {
         $supportsCapture = $this->gateway->supportsCapture();
-        $this->assertInternalType('boolean', $supportsCapture);
+        $this->assertIsBool($supportsCapture);
 
         if ($supportsCapture) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->capture());
@@ -107,7 +107,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsPurchase()
     {
         $supportsPurchase = $this->gateway->supportsPurchase();
-        $this->assertInternalType('boolean', $supportsPurchase);
+        $this->assertIsBool($supportsPurchase);
 
         if ($supportsPurchase) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->purchase());
@@ -119,7 +119,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsCompletePurchase()
     {
         $supportsCompletePurchase = $this->gateway->supportsCompletePurchase();
-        $this->assertInternalType('boolean', $supportsCompletePurchase);
+        $this->assertIsBool($supportsCompletePurchase);
 
         if ($supportsCompletePurchase) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->completePurchase());
@@ -131,7 +131,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsRefund()
     {
         $supportsRefund = $this->gateway->supportsRefund();
-        $this->assertInternalType('boolean', $supportsRefund);
+        $this->assertIsBool($supportsRefund);
 
         if ($supportsRefund) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->refund());
@@ -143,7 +143,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsVoid()
     {
         $supportsVoid = $this->gateway->supportsVoid();
-        $this->assertInternalType('boolean', $supportsVoid);
+        $this->assertIsBool($supportsVoid);
 
         if ($supportsVoid) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->void());
@@ -155,7 +155,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsCreateCard()
     {
         $supportsCreate = $this->gateway->supportsCreateCard();
-        $this->assertInternalType('boolean', $supportsCreate);
+        $this->assertIsBool($supportsCreate);
 
         if ($supportsCreate) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->createCard());
@@ -167,7 +167,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsDeleteCard()
     {
         $supportsDelete = $this->gateway->supportsDeleteCard();
-        $this->assertInternalType('boolean', $supportsDelete);
+        $this->assertIsBool($supportsDelete);
 
         if ($supportsDelete) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->deleteCard());
@@ -179,7 +179,7 @@ abstract class GatewayTestCase extends TestCase
     public function testSupportsUpdateCard()
     {
         $supportsUpdate = $this->gateway->supportsUpdateCard();
-        $this->assertInternalType('boolean', $supportsUpdate);
+        $this->assertIsBool($supportsUpdate);
 
         if ($supportsUpdate) {
             $this->assertInstanceOf(RequestInterface::class, $this->gateway->updateCard());
@@ -198,7 +198,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -218,7 +218,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -238,7 +238,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -258,7 +258,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -278,7 +278,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -298,7 +298,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -318,7 +318,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -338,7 +338,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -358,7 +358,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
@@ -378,7 +378,7 @@ abstract class GatewayTestCase extends TestCase
                 // set property on gateway
                 $getter = 'get'.ucfirst($this->camelCase($key));
                 $setter = 'set'.ucfirst($this->camelCase($key));
-                $value = uniqid();
+                $value = uniqid('', true);
                 $this->gateway->$setter($value);
 
                 // request should have matching property, with correct value
