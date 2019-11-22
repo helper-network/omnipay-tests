@@ -202,14 +202,12 @@ abstract class GatewayTestCase extends TestCase
 				$request = $this->gateway->authorize();
 				$this->assertSame($value, $request->$getter());
 			}
+		} else {
+			$this->expectNotToPerformAssertions();
 		}
-
-		$this->expectNotToPerformAssertions();
 	}
 
-	/**
-	 * @doesNotPerformAssertions
-	 */
+
 	public function testCompleteAuthorizeParameters()
 	{
 		if ($this->gateway->supportsCompleteAuthorize()) {
@@ -224,12 +222,12 @@ abstract class GatewayTestCase extends TestCase
 				$request = $this->gateway->completeAuthorize();
 				$this->assertSame($value, $request->$getter());
 			}
+		} else {
+			$this->expectNotToPerformAssertions();
 		}
 	}
 
-	/**
-	 * @doesNotPerformAssertions
-	 */
+
 	public function testCaptureParameters()
 	{
 		if ($this->gateway->supportsCapture()) {
@@ -244,6 +242,8 @@ abstract class GatewayTestCase extends TestCase
 				$request = $this->gateway->capture();
 				$this->assertSame($value, $request->$getter());
 			}
+		} else {
+			$this->expectNotToPerformAssertions();
 		}
 	}
 
