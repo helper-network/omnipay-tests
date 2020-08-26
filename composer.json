@@ -18,7 +18,7 @@
         "php-http/mock-client": "^1.1",
         "php-http/guzzle6-adapter": "^1.1.1|^2",
         "mockery/mockery": "^1",
-        "phpunit/phpunit": "^8.4"
+        "phpunit/phpunit": "^9"
     },
     "require-dev": {
         "omnipay/common": "^3",
